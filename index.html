@@ -1,0 +1,43 @@
+<!-- The index page of David and Phil's photo voting application -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Picture voting machine</title>
+<script src="js/jquery-2.2.1.js"></script>
+<link rel="stylesheet" href="bootstrap-3.3.6-dist/css/bootstrap.min.css">
+<script>
+	window.onload = function() {
+		console.log("The onload funtion has fired.");
+
+		// Preloading the first image url, tags
+		if (window.XMLHttpRequest) {
+			httpRequest = new XMLHttpRequest();
+		}
+		else if (window.ActiveXObject) {
+			try {
+				httpRequest = new ActiveXObject("Msxm12.XMLHTTP");
+			}
+			catch (e) {
+				try {
+					httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+				}
+				catch (e) {}
+			}
+		}	// End of else if statement.
+
+		var url = "http://192.168.56.101:8081/images";	// Gets a single image JSON.
+
+		this.httpRequest.open('GET', url, true);
+		this.httpRequest.send();
+
+	}
+</script>
+</head>
+<body>
+	<h2>Welcome to the picture voting app</h2>
+	<p>This has been located in the subfolder in html</p>
+	<p>I am going to need to learn more about permissions</p>
+	<p>modified from stuff</p>
+</body>
+</html>
