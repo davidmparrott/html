@@ -7,12 +7,10 @@
 <script src="js/jquery-2.2.1.js"></script>
 <link rel="stylesheet" href="bootstrap-3.3.6-dist/css/bootstrap.min.css">
 <script>
-	var getObject;
-
 	function displayImageInfo(imageObj) {
 		// Creating the title DOM element.
-		var title = document.createElement("h3");
-		title.innerHTML = imageObj.title;
+		var title = document.createElement("h4");
+		title.innerHTML = "TITLE: " + imageObj.title;
 		document.body.appendChild(title);
 		document.body.appendChild(document.createElement("br"));
 
@@ -22,7 +20,14 @@
 		img.alt = "You should be seeing an image from this url: " + imageObj.url;
 		document.body.appendChild(img);
 
+		// Creating a list of tags.
+		var imgTags = document.createElement("ul");
 
+		// Creating a button to submit votes and tags.
+		var submitButton = document.createElement("button");
+		submitButton.type = "button";
+		submitButton.innerHTML = "SUBMIT TAGS,VOTE and NEXT!";
+		document.body.appendChild(submitButton);
 	}
 
 	function checkState() {
@@ -38,8 +43,6 @@
 
 	window.onload = function() {
 		console.log("The onload funtion has fired.");
-
-		
 
 		// Preloading the first image url, tags
 		if (window.XMLHttpRequest) {
@@ -67,6 +70,7 @@
 </head>
 <body>
 	<h2>Welcome to the picture voting app</h2>
+	<br />
 
 </body>
 </html>
