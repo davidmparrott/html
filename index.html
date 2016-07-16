@@ -3,6 +3,7 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="shortcut icon" href="temp_favicon.ico">
 <title>Picture voting machine</title>
 <script src="js/jquery-2.2.1.js"></script>
 <link rel="stylesheet" href="bootstrap-3.3.6-dist/css/bootstrap.min.css">
@@ -58,9 +59,9 @@
 		var xhr = new XMLHttpRequest();
 		var url = "http://192.168.56.101:8081/images";
 
-		xhr.onreadystatechange = checkStatePut;
-		xhr.open('PUT', url, true);
 
+		xhr.open('PUT', url, true);
+		xhr.onreadystatechange = checkStatePut;
  		xhr.send();
 	}
 
