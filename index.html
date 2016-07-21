@@ -89,6 +89,7 @@
 			var imageObj = JSON.parse(this.responseText);
 			document.getElementsByTagName('img')[0].src = imageObj.url;
 			document.getElementsByName('newTag')[0].value = "";
+			document.getElementsByTagName('h4')[0].innerHTML = imageObj.title;
 		}
 	}
 
