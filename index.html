@@ -29,11 +29,16 @@
 		// Creating tags based on the length of the tag category array.
 		var tag = document.createElement("li");
 		if (imageObj.tags != null) {
-			tag.innerHTML = imageObj.tags;
+			for (var i = 0; i < imageObj.tags.length; i++) {
+				tag.innerHTML = imageObj.tags[i];
+				document.getElementsByTagName('ul')[0].appendChild(tag);
+			}
+			
 		} else {
-			tag.innerHTML = "You don't got not tags on this image.";
+			tag.innerHTML = "You don't got no tags on this image.";
+			document.getElementsByTagName('ul')[0].appendChild(tag);
 		}
-		document.getElementsByTagName('ul')[0].appendChild(tag);
+		
 
 		// Creating a button to submit votes and tags.
 		var submitButton = document.createElement("button");
@@ -56,6 +61,8 @@
 	function checkStatePut() {
 		if (this.readyState === 4 && this.status === 200) {
 			console.log("The put command has readyState 4 and status 200");
+			// Call a new function to get a new Url object from the server.
+			nextImage();
 		}
 	}
 
@@ -71,10 +78,42 @@
 			tag: tagInput, score: 1});
 
 		xhr.open('PUT', url, true);
-		xhr.onreadystatechange = checkStatePut;
  		xhr.send(body);
+		xhr.onreadystatechange = checkStatePut;
 
  		console.log("The entire body " + body);
+	}
+
+	function checkNewImage() {
+		if (this.readyState === 4 && this.status === 200) {
+			var imageObj = JSON.parse(this.responseText);
+			document.getElementsByTagName('img')[0].src = imageObj.url;
+			document.getElementsByName('newTag')[0].value = "";
+		}
+	}
+
+	// This function gets a new image asyncronously for th epage upon a successful 
+	// PUT of the image information from the user.
+	function nextImage() {
+		if (window.XMLHttpRequest) {
+			httpRequest = new XMLHttpRequest();
+		}
+		else if (window.ActiveXObject) {
+			try {
+				httpRequest = new ActiveXObject("Msxm12.XMLHTTP");
+			}
+			catch (e) {
+				try {
+					httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+				}
+				catch (e) {}
+			}
+		} // End of else if statement.
+
+		var url = "http://192.168.56.101:8081/images";
+		this.httpRequest.open('GET', url, true);
+		this.httpRequest.send();
+		this.httpRequest.onreadystatechange = checkNewImage;
 	}
 
 	// This function wipes out the old score and makes it 1.
@@ -122,9 +161,9 @@
 
 		var url = "http://192.168.56.101:8081/images";	// Gets a single image JSON.
 
-		this.httpRequest.onreadystatechange = checkState;
 		this.httpRequest.open('GET', url, true);
 		this.httpRequest.send();
+		this.httpRequest.onreadystatechange = checkState;
 	}
 </script>
 </head>
@@ -135,7 +174,7 @@
 		Please enter a new tag to help label this image as hot or not: <input type="text" name="newTag">
 	</form>
 	<button id="upVote" onclick="upVote()">VOTE FOR HOT!!</button>
-	<button id="downVote" onclick="downVote()">VOTE NOT NOT NOT!!!</button><br>
+	<button id="downVote" onclick="downVote()">VOTE NOT NOT NOT HOT!!!</button><br>
 	<button id="noVote" onclick="dontCareVote()">I DON'T CARE! DO YOU HEAR ME!!!!!</button>
 </body>
 </html>
