@@ -22,6 +22,27 @@
 		img.alt = "You should be seeing an image from this url: " + imageObj.url;
 		document.body.appendChild(img);
 
+		// Creating a button to submit votes and tags.
+		var submitButton = document.createElement("button");
+		submitButton.type = "button";
+		submitButton.innerHTML = "SUBMIT TAGS, VOTE and NEXT!";
+		submitButton.float = "left";
+		submitButton.onclick = function() {
+			voteAndUpdate();
+		}
+		document.body.appendChild(submitButton);
+
+		// Button to activate the taglist test funciton
+		var testButton = document.createElement("button");
+		testButton.type = "button";
+		testButton.setAttribute("class", "btn btn-primary btn-lg");
+		testButton.innerHTML = "This is for testing the list of tags.";
+		testButton.float = "left";
+		testButton.onlick = function() {
+			testSingleImage();
+		}
+		document.body.appendChild(testButton);
+
 		// Creating a list of tags.
 		var tagList = document.createElement("ul");
 		document.body.appendChild(tagList);
@@ -38,16 +59,6 @@
 			tag.innerHTML = "You don't got no tags on this image.";
 			document.getElementsByTagName('ul')[0].appendChild(tag);
 		}
-		
-
-		// Creating a button to submit votes and tags.
-		var submitButton = document.createElement("button");
-		submitButton.type = "button";
-		submitButton.innerHTML = "SUBMIT TAGS, VOTE and NEXT!";
-		submitButton.onclick = function() {
-			voteAndUpdate();
-		}
-		document.body.appendChild(submitButton);
 
 		// Check function to ensure there is a global object to receive this particular data.
 		if (typeof globalResponseObj == "undefined") {
@@ -116,6 +127,14 @@
 		this.httpRequest.open('GET', url, true);
 		this.httpRequest.send();
 		this.httpRequest.onreadystatechange = checkNewImage;
+	}
+
+	/*	
+	This function returns a single image from the API endpoint as a GET request after the image
+	has been updated by the user with a new tag from the PUT request.
+	*/
+	function testSingleImage() {
+		console.log("testSingleImage pushed");
 	}
 
 	// This function wipes out the old score and makes it 1.
