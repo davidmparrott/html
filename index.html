@@ -75,13 +75,13 @@
 		var url = "http://192.168.56.101:8081/images";
 		var tagInput = document.getElementsByName('newTag')[0].value;
 		var body = JSON.stringify({title: obj.title, url: obj.url, id: obj.id, 
-			tag: tagInput, score: 1});
+			tag: tagInput, score: obj.score});
 
 		xhr.open('PUT', url, true);
  		xhr.send(body);
 		xhr.onreadystatechange = checkStatePut;
 
- 		console.log("The entire body " + body);
+		console.log("body on voteAndUpdate(): " + body);
 	}
 
 	function checkNewImage() {
@@ -90,6 +90,7 @@
 			document.getElementsByTagName('img')[0].src = imageObj.url;
 			document.getElementsByName('newTag')[0].value = "";
 			document.getElementsByTagName('h4')[0].innerHTML = imageObj.title;
+			globalResponseObj = imageObj;
 		}
 	}
 
