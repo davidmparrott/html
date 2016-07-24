@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="bootstrap-3.3.6-dist/css/bootstrap.min.css">
 <script>
 	var globalResponseObj = {};
+	var globalTestResponse = {};
 
 	function displayImageInfo(imageObj) {
 		// Creating the title DOM element.
@@ -38,7 +39,7 @@
 		testButton.setAttribute("class", "btn btn-primary btn-lg");
 		testButton.innerHTML = "This is for testing the list of tags.";
 		testButton.float = "left";
-		testButton.onlick = function() {
+		testButton.onclick = function() {
 			testSingleImage();
 		}
 		document.body.appendChild(testButton);
@@ -66,6 +67,7 @@
 		}
 		else {
 			globalResponseObj = imageObj;
+			globalTestResponse = imageObj;
 		}
 	}
 
@@ -74,6 +76,10 @@
 			console.log("The put command has readyState 4 and status 200");
 			// Call a new function to get a new Url object from the server.
 			nextImage();
+
+			console.log("Updating the global test response.");
+
+			console.log(globalTestResponse);
 		}
 	}
 
@@ -82,7 +88,12 @@
 			console.log("voteAndUpdate globalResponseObj is not define.");
 		}
 		var obj = globalResponseObj;
-		var xhr = new XMLHttpRequest();
+
+		if (obj.score < -1 || obj.score > 1) {
+			obj.score = 0;
+		}
+
+		var xhr = httpRequestObj();
 		var url = "http://192.168.56.101:8081/images";
 		var tagInput = document.getElementsByName('newTag')[0].value;
 		var body = JSON.stringify({title: obj.title, url: obj.url, id: obj.id, 
@@ -93,35 +104,33 @@
 		xhr.onreadystatechange = checkStatePut;
 
 		console.log("body on voteAndUpdate(): " + body);
+		globalTestResponse = obj;
 	}
 
 	function checkNewImage() {
 		if (this.readyState === 4 && this.status === 200) {
+
+			console.log("Inside of the checkNewImage()");
+			console.log(this.responseText);
+
 			var imageObj = JSON.parse(this.responseText);
 			document.getElementsByTagName('img')[0].src = imageObj.url;
 			document.getElementsByName('newTag')[0].value = "";
 			document.getElementsByTagName('h4')[0].innerHTML = imageObj.title;
+
+			// Write in the tag deletion.
+
+			// Write a new list of the 
+
 			globalResponseObj = imageObj;
+
 		}
 	}
 
 	// This function gets a new image asyncronously for th epage upon a successful 
 	// PUT of the image information from the user.
 	function nextImage() {
-		if (window.XMLHttpRequest) {
-			httpRequest = new XMLHttpRequest();
-		}
-		else if (window.ActiveXObject) {
-			try {
-				httpRequest = new ActiveXObject("Msxm12.XMLHTTP");
-			}
-			catch (e) {
-				try {
-					httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
-				}
-				catch (e) {}
-			}
-		} // End of else if statement.
+		var httpRequest = httpRequestObj();
 
 		var url = "http://192.168.56.101:8081/images";
 		this.httpRequest.open('GET', url, true);
@@ -134,7 +143,17 @@
 	has been updated by the user with a new tag from the PUT request.
 	*/
 	function testSingleImage() {
-		console.log("testSingleImage pushed");
+		var httpRequest = httpRequestObj();
+		if (typeof globalTestResponse === "undefined") {
+			console.log("testSingleImage() globalTestResposne is not defined.");
+		}
+
+		var Id = globalTestResponse.id;
+
+		var url = "http://192.168.56.101:8081/test?Id=" + Id;
+		this.httpRequest.open('GET', url, true);
+		this.httpRequest.send();
+		this.httpRequest.onreadystatechange = checkNewImage;
 	}
 
 	// This function wipes out the old score and makes it 1.
@@ -155,6 +174,8 @@
 		console.log(globalResponseObj);
 	}
 
+	// Checks the state of the Ajax request and then calls 
+	// displayImageInfo()
 	function checkState() {
 		if (this.readyState === 4 && this.status === 200) {
 			var imageObj = JSON.parse(this.responseText);
@@ -163,8 +184,8 @@
 		}
 	}
 
-	window.onload = function() {
-		// Preloading the first image url, tags
+	// Returns a new httpRequesst object after checking the type of the browser.
+	function httpRequestObj() {
 		if (window.XMLHttpRequest) {
 			httpRequest = new XMLHttpRequest();
 		}
@@ -178,7 +199,15 @@
 				}
 				catch (e) {}
 			}
-		}	// End of else if statement.
+		}
+
+		return httpRequest;
+	}
+
+	// Loads the initial image once the window has loaded.
+	window.onload = function() {
+		// Preloading the first image url, tags
+		var httpRequest = httpRequestObj();
 
 		var url = "http://192.168.56.101:8081/images";	// Gets a single image JSON.
 
