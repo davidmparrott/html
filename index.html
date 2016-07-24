@@ -46,20 +46,11 @@
 
 		// Creating a list of tags.
 		var tagList = document.createElement("ul");
+		tagList.id = "tagList";
 		document.body.appendChild(tagList);
 
 		// Creating tags based on the length of the tag category array.
-		var tag = document.createElement("li");
-		if (imageObj.tags != null) {
-			for (var i = 0; i < imageObj.tags.length; i++) {
-				tag.innerHTML = imageObj.tags[i];
-				document.getElementsByTagName('ul')[0].appendChild(tag);
-			}
-			
-		} else {
-			tag.innerHTML = "You don't got no tags on this image.";
-			document.getElementsByTagName('ul')[0].appendChild(tag);
-		}
+		makeTags(imageObj);
 
 		// Check function to ensure there is a global object to receive this particular data.
 		if (typeof globalResponseObj == "undefined") {
@@ -118,12 +109,44 @@
 			document.getElementsByName('newTag')[0].value = "";
 			document.getElementsByTagName('h4')[0].innerHTML = imageObj.title;
 
-			// Write in the tag deletion.
+			// Write in the list of tags deletion.
+			deleteTags();
 
-			// Write a new list of the 
+			// Write a new list of the
+			makeTags(imageObj);
 
 			globalResponseObj = imageObj;
+		}
+	}
 
+	/*
+	Deletes the tags listed so a new set of tags can be constructed
+	without any empty list items.
+	*/
+	function deleteTags() {
+		var list = document.getElementById("tagList");
+		if (list.hasChildNodes()) {
+			list.removeChild(list.lastChild);
+			deleteTags();
+		}
+		else {
+			return;
+		}
+	}
+
+	/*
+	Makes a new list of tags once the Ajax request has completed.
+	*/
+	function makeTags(imageObj) {
+		var tag = document.createElement("li");
+		if (imageObj.tags != null) {
+			for (var i = 0; i < imageObj.tags.length; i++) {
+				tag.innerHTML = imageObj.tags[i];
+				document.getElementsByTagName('ul')[0].appendChild(tag);
+			}
+		} else {
+			tag.innerHTML = "You don't got no tags on this image.";
+			document.getElementsByTagName('ul')[0].appendChild(tag);
 		}
 	}
 
