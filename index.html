@@ -106,8 +106,8 @@
 
 			var imageObj = JSON.parse(this.responseText);
 			document.getElementsByTagName('img')[0].src = imageObj.url;
-			document.getElementsByName('newTag')[0].value = "";
 			document.getElementsByTagName('h4')[0].innerHTML = imageObj.title;
+			document.getElementsByName('newTag')[0].value = null;
 
 			// Write in the list of tags deletion.
 			deleteTags();
@@ -138,13 +138,18 @@
 	Makes a new list of tags once the Ajax request has completed.
 	*/
 	function makeTags(imageObj) {
-		var tag = document.createElement("li");
+		
 		if (imageObj.tags != null) {
+			var tag = document.createElement("li");
+			document.getElementsByTagName('ul')[0].appendChild(tag);
+			console.log("imageObj.tags length: " + imageObj.tags.length);
 			for (var i = 0; i < imageObj.tags.length; i++) {
 				tag.innerHTML = imageObj.tags[i];
 				document.getElementsByTagName('ul')[0].appendChild(tag);
+				tag = document.createElement('li');
 			}
 		} else {
+			var tag = document.createElement("li");
 			tag.innerHTML = "You don't got no tags on this image.";
 			document.getElementsByTagName('ul')[0].appendChild(tag);
 		}
