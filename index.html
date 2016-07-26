@@ -44,6 +44,11 @@
 		}
 		document.body.appendChild(testButton);
 
+		// Create a h4 object for the tag list title
+		var tagTitle = document.createElement("h4");
+		tagTitle.innerHTML = "Existing Tags";
+		document.body.appendChild(tagTitle);
+
 		// Creating a list of tags.
 		var tagList = document.createElement("ul");
 		tagList.id = "tagList";
