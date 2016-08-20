@@ -2,26 +2,29 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="temp_favicon.ico">
+<link rel="stylesheet" href="bootstrap-3.3.6-dist/css/bootstrap.min.css">
 <title>Picture voting machine</title>
 <script src="js/jquery-2.2.1.js"></script>
-<link rel="stylesheet" href="bootstrap-3.3.6-dist/css/bootstrap.min.css">
+
 <script>
 	var globalResponseObj = {};
 	var globalTestResponse = {};
 
 	function displayImageInfo(imageObj) {
 		// Creating the title DOM element.
-		var title = document.createElement("h4");
+		var title = document.createElement("h3");
 		title.innerHTML = "TITLE: " + imageObj.title;
 		document.body.appendChild(title);
 		document.body.appendChild(document.createElement("br"));
 
-		// Creting the image DOM element.
-		var img = document.createElement("img");
-		img.src = imageObj.url;
-		img.alt = "You should be seeing an image from this url: " + imageObj.url;
-		document.body.appendChild(img);
+		// Score of the image so far.
+		var score = document.createElement("h4");
+		score.id = "score";
+		score.innerHTML = "SCORE: " + imageObj.score;
+		document.body.appendChild(score);
+		document.body.appendChild(document.createElement("br"));
 
 		// Creating a button to submit votes and tags.
 		var submitButton = document.createElement("button");
@@ -44,18 +47,44 @@
 		}
 		document.body.appendChild(testButton);
 
+		// Adding a <br> element
+		var br = document.createElement("br");
+		document.body.appendChild(br);
+
+		// Bootstrap div container
+		var myDiv = document.createElement("div");
+		myDiv.className = "container-fluid";
+		document.body.appendChild(myDiv);
+
+		// Bootstrap Row object inside of myDiv
+		var myRow = document.createElement("div");
+		myRow.className ="row";
+		myDiv.appendChild(myRow);
+
+		// Creting the image DOM element.
+		var img = document.createElement("img");
+		img.src = imageObj.url;
+		img.alt = "You should be seeing an image from this url: " + imageObj.url;
+		img.className = "col-md-6";
+		myRow.appendChild(img);
+
 		// Create a h4 object for the tag list title
 		var tagTitle = document.createElement("h4");
 		tagTitle.innerHTML = "Existing Tags";
-		document.body.appendChild(tagTitle);
+		tagTitle.className = "col-md-4";
+		myRow.appendChild(tagTitle);
 
 		// Creating a list of tags.
 		var tagList = document.createElement("ul");
 		tagList.id = "tagList";
-		document.body.appendChild(tagList);
+		tagTitle.appendChild(tagList);
 
 		// Creating tags based on the length of the tag category array.
 		makeTags(imageObj);
+
+		// Making the comments objet
+		var comments = document.createElement("h4");
+		comments.innerHTML = "COMMENTS: Coming soon you impatient **********.";
 
 		// Check function to ensure there is a global object to receive this particular data.
 		if (typeof globalResponseObj == "undefined") {
@@ -72,9 +101,7 @@
 			console.log("The put command has readyState 4 and status 200");
 			// Call a new function to get a new Url object from the server.
 			nextImage();
-
 			console.log("Updating the global test response.");
-
 			console.log(globalTestResponse);
 		}
 	}
@@ -111,7 +138,7 @@
 
 			var imageObj = JSON.parse(this.responseText);
 			document.getElementsByTagName('img')[0].src = imageObj.url;
-			document.getElementsByTagName('h4')[0].innerHTML = imageObj.title;
+			document.getElementsByTagName('h3')[0].innerHTML = imageObj.title;
 			document.getElementsByName('newTag')[0].value = null;
 
 			// Write in the list of tags deletion.
@@ -119,6 +146,9 @@
 
 			// Write a new list of the
 			makeTags(imageObj);
+
+			// Update the score
+			updateScore(imageObj);
 
 			globalResponseObj = imageObj;
 		}
@@ -144,19 +174,28 @@
 	*/
 	function makeTags(imageObj) {
 		
-		if (imageObj.tags != null) {
+		if (imageObj.tags != null && imageObj.tags.length != 0) {
 			var tag = document.createElement("li");
+			tag.style.fontSize = "14px";
 			document.getElementsByTagName('ul')[0].appendChild(tag);
 			console.log("imageObj.tags length: " + imageObj.tags.length);
 			for (var i = 0; i < imageObj.tags.length; i++) {
 				tag.innerHTML = imageObj.tags[i];
 				document.getElementsByTagName('ul')[0].appendChild(tag);
 				tag = document.createElement('li');
+				tag.style.fontSize = "14px";
 			}
 		} else {
 			var tag = document.createElement("li");
-			tag.innerHTML = "You don't got no tags on this image.";
+			tag.innerHTML = "You don't got no tags assosciated with this here image.";
+			tag.style.fontSize = "14px";
 			document.getElementsByTagName('ul')[0].appendChild(tag);
+		}
+	}
+
+	function updateScore(imageObj) {
+		if (imageObj.score != null) {
+			document.getElementById("score").innerHTML = "SCORE: " + imageObj.score;
 		}
 	}
 
