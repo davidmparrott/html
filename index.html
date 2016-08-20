@@ -15,6 +15,7 @@
 	function displayImageInfo(imageObj) {
 		// Creating the title DOM element.
 		var title = document.createElement("h3");
+		title.id = "title";
 		title.innerHTML = "TITLE: " + imageObj.title;
 		document.body.appendChild(title);
 		document.body.appendChild(document.createElement("br"));
@@ -141,14 +142,11 @@
 			document.getElementsByTagName('h3')[0].innerHTML = imageObj.title;
 			document.getElementsByName('newTag')[0].value = null;
 
-			// Write in the list of tags deletion.
+			// Update all of the fields for the new image that is loaded.
 			deleteTags();
-
-			// Write a new list of the
 			makeTags(imageObj);
-
-			// Update the score
 			updateScore(imageObj);
+			updateTitle(imageObj);
 
 			globalResponseObj = imageObj;
 		}
@@ -196,6 +194,12 @@
 	function updateScore(imageObj) {
 		if (imageObj.score != null) {
 			document.getElementById("score").innerHTML = "SCORE: " + imageObj.score;
+		}
+	}
+
+	function updateTitle(imageObj) {
+		if (imageObj.title != null) {
+			document.getElementById("title").innerHTML = "TITLE: " + imageObj.title;
 		}
 	}
 
