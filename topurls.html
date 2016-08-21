@@ -8,7 +8,62 @@
 	<title>TOP 10</title>
 	<script src="js/jquery-2.2.1.js"></script>
 <script>
+	// Builds out the table of the top URLs to the existing table headers.
+	function topTenTable(topTenObj) {
+		if (typeof topTenObj === "undefined") {
+			console.log("topTenTable() does not have topTenObj defined.");
+		} else {
+			var tableRow = "This is my placeholder object.";
+			for (var i = 0; i < topTenObj.length; i++) {
+				tableRow = "<tr><td>" + topTenObj[i].title + "</td>" 
+				+ "<td>" + topTenObj[i].score + "</td>" 
+				+ "<td>" + (i + 1) + "</td>"
+				+ "<td><img src=\"" + topTenObj[i].url + "\""
+				+ "width=\"100px\"</a></td></tr>";
+				$("#topTen").append(tableRow);
+			} 
+		}
+	} 
+
+	// Checks the state of the Ajax request
+	function checkState() {
+		if (this.readyState === 4 && this.status === 200) {
+			var imageObj = JSON.parse(this.responseText);
+			console.log(imageObj);
+			//console.log(imageObj[0]._id);
+			topTenTable(imageObj);
+		}
+	}
+
+	// Returns a new httpRequesst object after checking the type of the browser.
+	function httpRequestObj() {
+		if (window.XMLHttpRequest) {
+			httpRequest = new XMLHttpRequest();
+		}
+		else if (window.ActiveXObject) {
+			try {
+				httpRequest = new ActiveXObject("Msxm12.XMLHTTP");
+			}
+			catch (e) {
+				try {
+					httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+				}
+				catch (e) {}
+			}
+		}
+		return httpRequest;
+	}
+
 	// To be filled out once the back end service is written
+	window.onload = function() {
+		var httpRequest = httpRequestObj();
+
+		var url = "http://192.168.56.101:8081/top";	// Gets a single image JSON.
+
+		this.httpRequest.open('GET', url, true);
+		this.httpRequest.send();
+		this.httpRequest.onreadystatechange = checkState;
+	}
 </script>
 </head>
 <body>
@@ -16,8 +71,14 @@
 	<h3><a href="/index.html">TO VOTING!!!! (Back to the page you just came from.)</a></h3>
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-md-4 bg-primary">
-				<table class="table table-striped">
+			<div class="col-md-6">
+				<table class="table table-striped" id="topTen">
+					<tr>
+						<th>Title</th>
+						<th>Score</th>
+						<th>Rank</th>
+						<th>Preview</th>
+					</tr>
 				</table>
 			</div>
 			<div class="col-md-6">
