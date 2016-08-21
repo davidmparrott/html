@@ -1,4 +1,4 @@
-{"docs": [
+[
 	{ 
 		"_id" : "2241877611", 
 		"title" : "Small Light Balls - Explore # 1", 
@@ -79,5 +79,4 @@
 		"score" : 0, 
 		"numTags" : 1 
 	}
-	]
-}
+]
