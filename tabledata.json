@@ -1,0 +1,84 @@
+// Just a bunch of data to mock up the service for the top 10
+{"docs": [
+	{ 
+		"_id" : "2241877611", 
+		"title" : "Small Light Balls - Explore # 1", 
+		"url" : "http://farm8.staticflickr.com/7465/28063074116_9afd92c2d6.jpg", 
+		"tags" : [ "flowers", "redhot", "closeup" ], 
+		"score" : 41, 
+		"numTags" : 3 
+	},
+	{ 
+		"_id" : "1443671670", 
+		"title" : "scream # 3", 
+		"url" : "http://farm8.staticflickr.com/7376/27483340393_d48d8219a7.jpg", 
+		"tags" : [ "dragontree", "water", "trashy" ], 
+		"score" : 14, 
+		"numTags" : 3 
+	},
+	{ 
+		"_id" : "3655685742", 
+		"title" : "The Edge", 
+		"url" : "http://farm8.staticflickr.com/7483/28104735235_de17344d29.jpg", 
+		"tags" : [ "kids", "tag1", "tag2", "kid" ], 
+		"score" : 43, 
+		"numTags" : 4 
+	},
+	{ 
+		"_id" : "3883401385", 
+		"title" : "Outmaneuvered", 
+		"url" : "http://farm8.staticflickr.com/7722/27489940554_0e4d941688.jpg", 
+		"tags" : [ "birds", "cranes", "nature" ], 
+		"score" : 11, 
+		"numTags" : 3 
+	},
+	{ 
+		"_id" : "1855292483", 
+		"title" : "five o'clock shadow", 
+		"url" : "http://farm8.staticflickr.com/7412/28075170356_25af3b3c16.jpg", 
+		"tags" : [ "america", "deseart", "gasoline", "trucks", "truckstop" ], 
+		"score" : 4, 
+		"numTags" : 5 
+	},
+	{ 
+		"_id" : "2684312240", 
+		"title" : "Little Owl is waiting for the Sun to Shine", 
+		"url" : "http://farm8.staticflickr.com/7394/27819597460_199398cf4b.jpg", 
+		"tags" : [ "owl", "rain" ], 
+		"score" : 1, 
+		"numTags" : 2 
+	},
+	{ 
+		"_id" : "3667993492", 
+		"title" : "Golden Reflections", 
+		"url" : "http://farm8.staticflickr.com/7380/28060925606_45609f650b.jpg", 
+		"tags" : [ "reflections", "skyline" ], 
+		"score" : 2, 
+		"numTags" : 2 
+	},
+	{ 
+		"_id" : "4076437062", 
+		"title" : "My Surf Runneth Over....", 
+		"url" : "http://farm8.staticflickr.com/7295/28066601096_32d81ed78f.jpg", 
+		"tags" : [ "surfers", "waves", "big" ], 
+		"score" : 3, 
+		"numTags" : 3 
+	},
+	{ 
+		"_id" : "3468611623", 
+		"title" : "Sunset reflections", 
+		"url" : "http://farm8.staticflickr.com/7369/28097217445_9cf9341124.jpg", 
+		"tags" : [ "sunset", "beach" ], 
+		"score" : 2, 
+		"numTags" : 2 
+	},
+	{ 
+		"_id" : "861984809", 
+		"title" : "fallen", 
+		"url" : "http://farm8.staticflickr.com/7335/27486814143_e7d981e68a.jpg", 
+		"tags" : [ "nonsense" ], 
+		"score" : 0, 
+		"numTags" : 1 
+	}
+	]
+}

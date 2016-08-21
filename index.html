@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="shortcut icon" href="temp_favicon.ico">
-<link rel="stylesheet" href="bootstrap-3.3.6-dist/css/bootstrap.min.css">
-<title>Picture voting machine</title>
-<script src="js/jquery-2.2.1.js"></script>
-
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" href="temp_favicon.ico">
+	<link rel="stylesheet" href="bootstrap-3.3.6-dist/css/bootstrap.min.css">
+	<title>Picture voting machine</title>
+	<script src="js/jquery-2.2.1.js"></script>
 <script>
 	var globalResponseObj = {};
 	var globalTestResponse = {};
@@ -139,7 +138,7 @@
 
 			var imageObj = JSON.parse(this.responseText);
 			document.getElementsByTagName('img')[0].src = imageObj.url;
-			document.getElementsByTagName('h3')[0].innerHTML = imageObj.title;
+			document.getElementById('title').innerHTML = imageObj.title;
 			document.getElementsByName('newTag')[0].value = null;
 
 			// Update all of the fields for the new image that is loaded.
@@ -295,6 +294,8 @@
 </head>
 <body>
 	<h2>Welcome to the picture voting app</h2>
+	<br>
+	<h3><a href="/topurls.html">Top 10 Highest Scoring Images!!!!!!!!!!!</a></h3>
 	<br>
 	<form>
 		Please enter a new tag to help label this image as hot or not: <input type="text" name="newTag">
