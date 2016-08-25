@@ -64,7 +64,7 @@
 	window.onload = function() {
 		var httpRequest = httpRequestObj();
 
-		var url = "http://192.168.56.101/tabledata.json";	// Gets a single image JSON.
+		var url = "http://192.168.56.101:8081/top";	// Gets a single image JSON.
 
 		this.httpRequest.open('GET', url, true);
 		this.httpRequest.send();
@@ -72,12 +72,20 @@
 	}
 
 	$( document ).ready(function() {
-		$('th').hover(
-			function() {console.log("you have hovered.");},
-			function() {console.log("leaving the hover zone.");});
+		var background;
 
 		$("table").on("mouseenter", "tr", function() {
-			console.log($(this).text());
+			//console.log($(this).text());
+			background = $(this).css("background-color");
+			$(this).css("background-color", "#5bc0de");		
+			var curUrl = $(this).find("td");
+			if (curUrl.length != 0) {
+				var myUrl = curUrl[3].getElementsByTagName("img");
+				$("#bigImg").attr("src", myUrl[0].src);
+			}
+		});
+		$("table").on("mouseleave", "tr", function() {
+			$(this).css("background-color", background);
 		});
 	});
 </script>
