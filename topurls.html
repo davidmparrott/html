@@ -7,16 +7,27 @@
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<title>TOP 10</title>
+<<<<<<< HEAD
 	<script src="https://code.jquery.com/jquery-2.2.4.js"></script>
 <script>
+=======
+	<script src="js/jquery-2.2.1.js"></script>
+<script type="text/javascript">
+>>>>>>> 64fb465ff0d339584c638f76f3364f5c5fc6a890
 	// Builds out the table of the top URLs to the existing table headers.
 	function topTenTable(topTenObj) {
 		if (typeof topTenObj === "undefined") {
 			console.log("topTenTable() does not have topTenObj defined.");
 		} else {
 			var tableRow = "This is my placeholder object.";
+
+			topTenObj.sort(function(a, b) {
+				return b.score-a.score;
+			});
+
 			for (var i = 0; i < topTenObj.length; i++) {
-				tableRow = "<tr><td>" + topTenObj[i].title + "</td>" 
+				tableRow = "<tr><td class=\"rowHover\" id=\"id" + i + "\">" 
+				+ topTenObj[i].title + "</td>" 
 				+ "<td>" + topTenObj[i].score + "</td>" 
 				+ "<td>" + (i + 1) + "</td>"
 				+ "<td><img src=\"" + topTenObj[i].url + "\""
@@ -65,6 +76,24 @@
 		this.httpRequest.send();
 		this.httpRequest.onreadystatechange = checkState;
 	}
+
+	$( document ).ready(function() {
+		var background;
+
+		$("table").on("mouseenter", "tr", function() {
+			//console.log($(this).text());
+			background = $(this).css("background-color");
+			$(this).css("background-color", "#5bc0de");		
+			var curUrl = $(this).find("td");
+			if (curUrl.length != 0) {
+				var myUrl = curUrl[3].getElementsByTagName("img");
+				$("#bigImg").attr("src", myUrl[0].src);
+			}
+		});
+		$("table").on("mouseleave", "tr", function() {
+			$(this).css("background-color", background);
+		});
+	});
 </script>
 </head>
 <body>
@@ -83,9 +112,10 @@
 				</table>
 			</div>
 			<div class="col-md-6">
-				<img src="http://farm8.staticflickr.com/7453/27497150894_7cefdaef7b.jpg" alt="There should be an image here.">
+				<img id="bigImg" src="http://farm8.staticflickr.com/7453/27497150894_7cefdaef7b.jpg" alt="There should be an image here.">
 			</div>
 		</div>
 	</div>
+	<p>What the hell is all of this shit</p>
 </body>
 </html>
